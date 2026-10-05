@@ -1,0 +1,212 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-tech);
+  --font-display: var(--font-head);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-panel: var(--panel);
+  --color-panel-line: var(--panel-line);
+  --color-risk-high: var(--risk-high);
+  --color-risk-medium: var(--risk-medium);
+  --color-risk-caution: var(--risk-caution);
+  --color-risk-safe: var(--risk-safe);
+  --color-bench-1: var(--bench-1);
+  --color-bench-2: var(--bench-2);
+  --color-bench-3: var(--bench-3);
+  --color-bench-4: var(--bench-4);
+  --color-bench-5: var(--bench-5);
+  --color-terrain: var(--terrain);
+  --color-haul: var(--haul);
+}
+
+:root {
+  --radius: 0.35rem;
+  --font-body: "Barlow", ui-sans-serif, system-ui, sans-serif;
+  --font-head: "Barlow Condensed", "Barlow", ui-sans-serif, sans-serif;
+  --font-tech: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Control-room dark industrial shell */
+  --background: oklch(0.17 0.012 250);
+  --foreground: oklch(0.93 0.008 250);
+  --panel: oklch(0.213 0.014 250);
+  --panel-line: oklch(0.3 0.018 250);
+  --card: oklch(0.213 0.014 250);
+  --card-foreground: oklch(0.93 0.008 250);
+  --popover: oklch(0.213 0.014 250);
+  --popover-foreground: oklch(0.93 0.008 250);
+  --primary: oklch(0.78 0.16 72);
+  --primary-foreground: oklch(0.18 0.02 70);
+  --secondary: oklch(0.27 0.016 250);
+  --secondary-foreground: oklch(0.93 0.008 250);
+  --muted: oklch(0.25 0.014 250);
+  --muted-foreground: oklch(0.68 0.014 250);
+  --accent: oklch(0.72 0.13 210);
+  --accent-foreground: oklch(0.16 0.02 250);
+  --destructive: oklch(0.62 0.23 26);
+  --destructive-foreground: oklch(0.97 0.01 26);
+  --border: oklch(0.3 0.018 250);
+  --input: oklch(0.3 0.018 250);
+  --ring: oklch(0.78 0.16 72);
+
+  /* Risk palette */
+  --risk-high: oklch(0.63 0.24 26);
+  --risk-medium: oklch(0.73 0.18 55);
+  --risk-caution: oklch(0.84 0.16 96);
+  --risk-safe: oklch(0.74 0.17 156);
+
+  /* Terrain: iron-ore ochre / haematite, darker toward the pit floor */
+  --terrain: oklch(0.31 0.026 120);
+  --bench-1: oklch(0.44 0.055 62);
+  --bench-2: oklch(0.395 0.056 55);
+  --bench-3: oklch(0.35 0.057 46);
+  --bench-4: oklch(0.305 0.055 38);
+  --bench-5: oklch(0.255 0.05 32);
+  --haul: oklch(0.66 0.03 80);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+  }
+}
+
+@utility panel-frame {
+  background: var(--panel);
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius);
+}
+
+@utility tech-label {
+  font-family: var(--font-tech);
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@keyframes mineguard-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@utility pulse-alarm {
+  animation: mineguard-pulse 0.85s ease-in-out infinite;
+}
+
+@keyframes mineguard-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ---------------------------------------------------- Leaflet integration */
+
+.leaflet-container {
+  background: #080b0f;
+  font-family: var(--font-body);
+}
+
+.leaflet-container .mineguard-marker {
+  background: transparent;
+  border: 0;
+}
+
+.leaflet-container .mineguard-road-label {
+  background: rgba(8, 12, 16, 0.72);
+  border: 1px solid var(--panel-line);
+  color: var(--foreground);
+  font-family: var(--font-tech);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  padding: 1px 4px;
+  box-shadow: none;
+}
+
+.leaflet-container .mineguard-road-label::before {
+  display: none;
+}
+
+.leaflet-tooltip,
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: rgba(10, 14, 19, 0.94);
+  color: var(--foreground);
+  border: 1px solid var(--panel-line);
+  border-radius: var(--radius);
+  box-shadow: none;
+}
+
+.leaflet-tooltip {
+  font-family: var(--font-tech);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.leaflet-tooltip::before {
+  display: none;
+}
+
+.leaflet-bar a,
+.leaflet-control-attribution {
+  background: rgba(10, 14, 19, 0.92) !important;
+  color: var(--foreground) !important;
+  border-color: var(--panel-line) !important;
+  font-size: 9px;
+}
